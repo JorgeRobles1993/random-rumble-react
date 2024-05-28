@@ -1,32 +1,30 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import PlayerCard from './PlayerCard';
 
+const PlayerList = () => {
+  const players = useSelector((state) => state.fight.players);
 
-class PlayerList extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      players: {
-        1: { name: "John", pv: 100, pvMax: 100, mana: 30, manaMax: 30, id: 1 },
-        2: { name: "Jack", pv: 100, pvMax: 100, mana: 30, manaMax: 30, id: 2 },
-        3: { name: "Jessy", pv: 100, pvMax: 100, mana: 30, manaMax: 30, id: 3 },
-        4: { name: "Jenny", pv: 100, pvMax: 100, mana: 30, manaMax: 30, id: 4 }
-      }
+  const displayPlayers = () => {
+    if (!players || Object.keys(players).length === 0) {
+      return <div>No player data available</div>;
     }
-  }
-  displayPlayers = () => {
-    return Object.keys(this.state.players).map(key => (
-      <PlayerCard key={this.state.players[key].id} player={this.state.players[key]} />
-    ));
-  }
-  render() {
+
     return (
-      <div className='row'>
-        {this.displayPlayers()}
-      </div>
+      Object.keys(players).map(key => (
+        <div key={players[key].id} className="player">
+          <img src={`images/${players[key].avatar}`} alt={players[key].name} />
+          <PlayerCard player={players[key]} />
+        </div>
+      ))
     );
   }
 
+  return (
+    <div className='row'>
+      {displayPlayers()}
+    </div>
+  );
 }
 
 export default PlayerList;
