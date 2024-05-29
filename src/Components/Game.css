@@ -1,3 +1,35 @@
+.row2 {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.card{
+  width: 100%;
+  border: 2px solid green;
+}
+
+.card-body {
+  padding: 80px;
+  border: 2px solid blue;
+}
+
+.monsterCard{
+  border: solid;
+  border-color:black;
+}
+
+.card-monster{
+  margin-top: 10px;
+}
+
+.img-fluid {
+  border: 2px solid orange;
+  width: auto;
+  height: auto;
+  justify-content: center;
+
+}
 .App {
   text-align: center;
 }
