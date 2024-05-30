@@ -21,9 +21,9 @@ const PlayerCard = ({ player, isFieldPlayer, substitutePlayers }) => {
 
 
   return (
-    <div className="player-card">
+    <div className="nes-container is-rounded is-dark">
       <div className="player-info">
-        <img src={player.image} alt={player.name} width="200" height="200" />
+        <img src={player.image} alt={player.name} width="300" height="300" />
         <div className="player-details">
           <h3>{player.name}</h3>
           <div className="health-bar-container">
@@ -36,8 +36,8 @@ const PlayerCard = ({ player, isFieldPlayer, substitutePlayers }) => {
         </div>
       </div>
       {isFieldPlayer && (
-        <select onChange={(e) => handleSwap(Number(e.target.value))}>
-          <option value="">Select Substitute</option>
+        <select className="nes-btn" onChange={(e) => handleSwap(Number(e.target.value))}>
+          <option value="" disabled selected hidden>Select Substitute</option>
           {substitutePlayers.map(sub => (
             <option key={sub.id} value={sub.id}>{sub.name}</option>
           ))}

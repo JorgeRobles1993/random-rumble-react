@@ -9,7 +9,7 @@ import './Components/Game.css'; // Importa estilos CSS si es necesario
 const App = () => (
   <Provider store={store}>
     <div className="App">
-      <h1 className='game'>Super Mario RPG</h1>
+    <img src="/images/Super_Mario_RPG_Logo.png" alt="Monster" className='imglogo'/>
       <Monster /> {/* Coloca el componente del monstruo aquí */}
       <PlayerList />
     </div>

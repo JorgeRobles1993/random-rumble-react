@@ -10,12 +10,13 @@ const Monster = () => {
     }
     
   return (
-    <div className="monster">
-      <h2>{monster.name} {monster.pv}/{monster.pvmax}</h2>
+    <div className="nes-container is-rounded is-dark">
+      <h2 className='nes-text is-error'>{monster.name}</h2>
       <HealthBar pv={monster.pv} pvmax={monster.pvmax} faType='fa-heart' barName=' : pv' bgType='bg-danger' />
-      
-      <img src="/images/Exor.png" alt="Monster" width="250" /> {/* Muestra la imagen del monstruo */}
+      <div className='monstercard'>
+      <img src="/images/Exor.png" alt="Monster" width="300" height="300"/> {/* Muestra la imagen del monstruo */}
       {/* Aquí puedes mostrar otra información relevante sobre el monstruo */}
+    </div>
     </div>
   );
 };
