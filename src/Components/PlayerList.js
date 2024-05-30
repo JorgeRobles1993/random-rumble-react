@@ -1,27 +1,40 @@
+// PlayerList.js
 import React from 'react';
 import { useSelector } from 'react-redux';
 import PlayerCard from './PlayerCard';
 
 const PlayerList = () => {
-  const players = useSelector((state) => state.fight.players);
+  const allPlayers = useSelector(state => state.fight.allPlayers);
+  const fieldPlayers = useSelector(state => state.fight.fieldPlayers);
+  const substitutePlayers = useSelector(state => state.fight.substitutePlayers);
 
-  const renderPlayerCards = () => {
-    if (!players || players.length === 0) {
-      return <div>No player data available</div>;
-    }
-
-    return players.map(player => (
-      <div key={player.id} className="player">
-        <PlayerCard player={player} />
-      </div>
-    ));
-  }
+  const getPlayerById = (id) => allPlayers.find(player => player.id === id);
 
   return (
-    <div className="row2">
-      {renderPlayerCards()}
+    <div>
+      <h2>Active Players</h2>
+      <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+        {fieldPlayers.map(id => (
+          <PlayerCard
+            key={id}
+            player={getPlayerById(id)}
+            isFieldPlayer={true}
+            substitutePlayers={substitutePlayers.map(subId => getPlayerById(subId))}
+          />
+        ))}
+      </div>
+      <h2>Substitute Players</h2>
+      <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+        {substitutePlayers.map(id => (
+          <PlayerCard
+            key={id}
+            player={getPlayerById(id)}
+            isFieldPlayer={false}
+          />
+        ))}
+      </div>
     </div>
   );
-}
+};
 
 export default PlayerList;

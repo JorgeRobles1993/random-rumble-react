@@ -1,21 +1,14 @@
+// index.js
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import './index.css';
-import Game from './Components/Game';
-import * as serviceWorker from './serviceWorker';
-import { store } from './store/store';
-import { Provider } from 'react-redux';
+import App from './App';
+import './index.css';  // Importa estilos globales si los tienes
 
 const container = document.getElementById('root');
-const root = createRoot(container);
+const root = createRoot(container); // Crear un root utilizando createRoot
 
 root.render(
-    <Provider store={store}>
-        <Game />
-    </Provider>
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
 );
-
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();

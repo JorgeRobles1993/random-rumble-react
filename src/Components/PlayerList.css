@@ -1,0 +1,20 @@
+/* PlayerList.css */
+.player-list-container {
+    display: flex;
+    justify-content: space-around; /* Ajusta según tus necesidades */
+  }
+  
+  .field-players-container,
+  .substitute-players-container {
+    flex: 1;
+    margin-right: 20px; /* Espacio entre los contenedores */
+  }
+  
+  .player-cards {
+    display: flex;
+    flex-wrap: wrap; /* Permite que los jugadores se envuelvan automáticamente */
+    gap: 10px; /* Espacio entre las tarjetas de los jugadores */
+  }
+  
+  /* Estilos adicionales según sea necesario */
+  

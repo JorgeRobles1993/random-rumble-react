@@ -1,12 +1,11 @@
-// créer ce fichier dans src/store/store.js
+// store.js
+import { configureStore } from '@reduxjs/toolkit';
+import fightReducer from './fightSlice';  // Asegúrate de que la ruta sea correcta
 
-import { configureStore } from "@reduxjs/toolkit";
-import fightReducer from '../features/fight/fightSlice'
-
-export const store = configureStore({
+const store = configureStore({
   reducer: {
-    fight: fightReducer
+    fight: fightReducer,
   },
 });
 
-//TEST 4// 
+export default store;
