@@ -20,7 +20,7 @@ const Monster = () => {
                 <div className="row">
                   <div className="col-sm-2 offset-sm-3">
                     <span className="badge badge-danger ml-2 " id="degatSpanMonster"></span>
-                    <img className="img-fluid" src={`images/monster1.png`} alt='monster' />
+                    <img className="img-fluid" src={`images/Exor.png`} alt='monster' />
                   </div>
 
                   <div id="comboOnMonster" className="col-sm-6">
