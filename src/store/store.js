@@ -8,3 +8,5 @@ export const store = configureStore({
     fight: fightReducer
   },
 });
+
+//TEST 4// 
