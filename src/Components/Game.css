@@ -580,7 +580,7 @@ animationHeal
 
 html,
 body {
-  font-family: 'Hind', sans-serif;
+  font-family: "Press Start 2P", system-ui;
   margin: 0;
   padding: 0;
   width: 100%;
@@ -757,4 +757,34 @@ body {
 
 h2 {
   color: wheat;
+}
+
+.button {
+  width: 100px;
+  height: 100px;
+  background-color: #1E90FF;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+.button::before {
+  content: "";
+  width: 85px;
+  height: 85px;
+  background-color: #4682B4;
+  border-radius: 50%;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+}
+
+.button span {
+  font-size: 48px;
+  color: #00008B;
+  position: relative;
+  z-index: 1;
 }

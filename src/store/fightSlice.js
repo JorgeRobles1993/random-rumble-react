@@ -14,11 +14,11 @@ export const fightSlice = createSlice({
     substitutePlayers: [4, 5], // IDs de jugadores suplentes
     monster: {
       id: 1,
-      name: 'Exor',
-      pv: 1000,
-      pvmax: 1000,
+      name: 'Croco',
+      pv: 500,
+      pvmax: 500,
       attack: 10,
-      image: 'Exor.png'
+      image: '/images/Croco.png'
     },
   },
   reducers: {
@@ -36,7 +36,23 @@ export const fightSlice = createSlice({
     hitMonster: (state, action) => {
       const damage = Math.floor(Math.random() * 10) + 1; // Generar un número aleatorio entre 1 y 10
       state.monster.pv = Math.max(0, state.monster.pv - damage); // Reducir la salud del monstruo según el daño recibido
+      
+      if (state.monster.pv <= 0) {
+        state.monster = {
+          id: 2,
+          name: 'Exor',
+          pv: 1000,
+          pvmax: 1000,
+          attack: 15,
+          image: '/images/Exor.png'
+        };
+      }
     },
+    hitMonsterSpecial: (state, action) => {
+      const damage = Math.floor(Math.random() * 100) + 1; // Generar un número aleatorio entre 1 y 10
+      state.monster.pv = Math.max(0, state.monster.pv - damage); // Reducir la salud del monstruo según el daño recibido
+    },
+    
     hitBack: (state, action) => {
       const players = state.allPlayers.filter(player => state.fieldPlayers.includes(player.id)); // Filtrar jugadores en el campo
       const randomPlayerIndex = Math.floor(Math.random() * players.length); // Obtener un índice aleatorio dentro del rango de jugadores en el campo
@@ -49,6 +65,6 @@ export const fightSlice = createSlice({
   },
 });
 
-export const { swapPlayers, hitMonster, hitBack } = fightSlice.actions;
+export const { swapPlayers, hitMonster, hitBack, hitMonsterSpecial } = fightSlice.actions;
 
 export default fightSlice.reducer;

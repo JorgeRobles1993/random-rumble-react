@@ -1,24 +1,38 @@
-// PlayerCard.js
 import React from 'react';
-import { useDispatch } from 'react-redux';
-import { swapPlayers, hitMonster, hitBack } from '../store/fightSlice';
+import { useSelector, useDispatch } from 'react-redux';
+import { swapPlayers, hitMonster, hitBack, hitMonsterSpecial } from '../store/fightSlice';
 import HealthBar from './HealthBar';
 import '../Components/Game.css';
 
 const PlayerCard = ({ player, isFieldPlayer, substitutePlayers }) => {
   const dispatch = useDispatch();
+  const currentPlayer = useSelector(state => state.fight.allPlayers.find(p => p.id === player.id));
 
   const attackMonster = () => {
-    const damage = Math.floor(Math.random() * 10) + 1; // Daño aleatorio entre 1 y 10
-    dispatch(hitMonster({ damage }));
+    if (currentPlayer && currentPlayer.stats.pv > 0 && isFieldPlayer) {
+      dispatch(hitMonster());
+      console.log(`${currentPlayer.name} atacó al monstruo!`);
+      dispatch(hitBack());
+      console.log(`El monstruo contraatacó!`);
+    } else if (currentPlayer) {
+      console.log(`${currentPlayer.name} no puede atacar porque no tiene vida restante o no esta dentro del equipo activo.`);
+    }
+  };
+
+  const attackMonsterSpecial = () => {
+    if (currentPlayer && currentPlayer.stats.pv > 0 && isFieldPlayer) {
+    dispatch(hitMonsterSpecial());
+    console.log(`${currentPlayer.name} atacó al monstruo con un ataque especial!!`);
     dispatch(hitBack());
-    console.log(`${player.name} atacó al monstruo!`);
+    console.log(`El monstruo contraatacó!`);
+  } else if (currentPlayer) {
+    console.log(`${currentPlayer.name} no puede atacar porque no tiene vida restante o no esta dentro del equipo activo.`);
+  }
   };
 
   const handleSwap = (substitutePlayerId) => {
     dispatch(swapPlayers({ fieldPlayerId: player.id, substitutePlayerId }));
   };
-
 
   return (
     <div className="nes-container is-rounded is-dark">
@@ -31,7 +45,7 @@ const PlayerCard = ({ player, isFieldPlayer, substitutePlayers }) => {
           </div>
           <div className="button-container">
             <img src={`${process.env.PUBLIC_URL}/images/Button A.png`} alt="Attack" onClick={attackMonster} className="button-image" />
-            <img src={`${process.env.PUBLIC_URL}/images/Button B.png`} alt="Attack" onClick={attackMonster} className="button-image" />
+            <img src={`${process.env.PUBLIC_URL}/images/Button B.png`} alt="Special Attack" onClick={attackMonsterSpecial} className="button-image" />
           </div>
         </div>
       </div>

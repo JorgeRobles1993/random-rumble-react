@@ -2,7 +2,6 @@
 import React from 'react';
 
 const HealthBar = (props) => {
-  console.log(props)
   return (
     <div className="progress md-progress" >
       <div className="progress-bar"
