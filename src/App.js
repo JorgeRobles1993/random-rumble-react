@@ -1,4 +1,3 @@
-// App.js
 import React from 'react';
 import { Provider } from 'react-redux';
 import store from './store/store';
@@ -9,8 +8,8 @@ import './Components/Game.css'; // Importa estilos CSS si es necesario
 const App = () => (
   <Provider store={store}>
     <div className="App">
-    <img src="/images/Super_Mario_RPG_Logo.png" alt="Monster" className='imglogo'/>
-      <Monster /> {/* Coloca el componente del monstruo aquí */}
+    <img src="/images/Super_Mario_RPG_Logo.png" className='imglogo'/>
+      <Monster />
       <PlayerList />
     </div>
   </Provider>

@@ -1,4 +1,3 @@
-// PlayerList.js
 import React from 'react';
 import { useSelector } from 'react-redux';
 import PlayerCard from './PlayerCard';
@@ -13,7 +12,7 @@ const PlayerList = () => {
   return (
     <div>
       <h2>Active Players</h2>
-      <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+      <div className="active-players">
         {fieldPlayers.map(id => (
           <PlayerCard
             key={id}
@@ -24,7 +23,7 @@ const PlayerList = () => {
         ))}
       </div>
       <h2>Substitute Players</h2>
-      <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+      <div className="substitute-players">
         {substitutePlayers.map(id => (
           <PlayerCard
             key={id}
