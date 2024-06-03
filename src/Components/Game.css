@@ -1,3 +1,11 @@
+@font-face{
+  font-family: "Press Start 2P", system-ui;
+  src: url('https://fonts.googleapis.com/css2?family=Arvo:ital,wght@0,400;0,700;1,400;1,700&family=Concert+One&family=Grand+Hotel&family=Press+Start+2P&family=Roboto:wght@300&family=Zen+Tokyo+Zoo&display=swap');
+};
+
+p, h1, h2 {
+  font-family: "Press Start 2P", system-ui;
+}
 .card {
   width: 100%;
   border: 2px solid green;
