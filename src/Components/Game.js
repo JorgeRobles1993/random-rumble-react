@@ -1,14 +1,15 @@
 import React from 'react';
 import Monster from './Monster';
 import PlayerList from './PlayerList';
+import Mana from './Mana'; 
 
-//remplacer votre class App.js par cette notation
 const App = () => (
   <div className="App">
       <Monster />
       <br></br>
       <section className="container-fluid">
           <PlayerList />
+          <Mana />
       </section>
   </div>
 )
