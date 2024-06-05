@@ -35,7 +35,7 @@ const PlayerCard = ({ player, isFieldPlayer, substitutePlayers }) => {
   return (
     <div className={`nes-container is-rounded is-dark ${isAlive ? '' : 'grayed-out'}`}>
       <div className="player-info">
-        <img src={player.image} alt={player.name} width="150" height="150" />
+        <img className={`player-info ${isAlive ? '' : 'player-info-dead'}`} src={player.image} alt={player.name} width="150" height="150" />
         <div className="player-details">
           <h3>{player.name}</h3>
           <div className="health-bar-container">

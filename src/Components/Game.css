@@ -702,3 +702,8 @@ h3 {
   pointer-events: auto; /* Habilita solo el botón de intercambio */
 }
 
+.player-info-dead {
+  transform: rotate(90deg); /* Rotar 90 grados si el jugador está muerto */
+  position: relative;
+  bottom: -5vh;
+}

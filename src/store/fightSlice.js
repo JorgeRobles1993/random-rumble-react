@@ -25,6 +25,7 @@ export const fightSlice = createSlice({
     activeMonsterIndex: 0,
     Mana: 30,
     ManaMax: 30,
+    turns: [], // Registro de turnos de ataque
   },
   reducers: {
     swapPlayers: (state, action) => {
@@ -39,54 +40,72 @@ export const fightSlice = createSlice({
       }
     },
     hitMonster: (state, action) => {
-      const activeMonster = state.monsters[state.activeMonsterIndex];
-      const damage = Math.floor(Math.random() * 10) + 1; // Generar un número aleatorio entre 1 y 10
-      activeMonster.pv = Math.max(0, activeMonster.pv - damage); // Reducir la salud del monstruo según el daño recibido
-      state.Mana = Math.min(state.Mana + 1, state.ManaMax); // Aumentar el mana pero no sobrepasar el máximo
+      const { playerId } = action.payload;
+      if (!state.turns.includes(playerId)) {
+        const activeMonster = state.monsters[state.activeMonsterIndex];
+        const damage = Math.floor(Math.random() * 10) + 1; // Generar un número aleatorio entre 1 y 10
+        activeMonster.pv = Math.max(0, activeMonster.pv - damage); // Reducir la salud del monstruo según el daño recibido
+        state.Mana = Math.min(state.Mana + 1, state.ManaMax); // Aumentar el mana pero no sobrepasar el máximo
+        state.turns.push(playerId); // Registrar el ataque del jugador
 
-      if (activeMonster.pv <= 0 && state.activeMonsterIndex < state.monsters.length - 1) {
-        state.activeMonsterIndex += 1; // Cambiar al siguiente monstruo
+        if (activeMonster.pv <= 0 && state.activeMonsterIndex < state.monsters.length - 1) {
+          state.activeMonsterIndex += 1; // Cambiar al siguiente monstruo
+          state.turns = []; // Resetear los turnos para la nueva ronda
+        }
+
+        // Verificar si todos los jugadores han atacado
+        if (state.turns.length === state.fieldPlayers.length) {
+          state.turns = []; // Resetear los turnos para la nueva ronda
+        }
       }
     },
     hitMonsterSpecial: (state, action) => {
       const { playerId } = action.payload;
-      const activeMonster = state.monsters[state.activeMonsterIndex];
-      const players = state.allPlayers.filter(player => state.fieldPlayers.includes(player.id));
-      let damage = 0;
+      if (!state.turns.includes(playerId)) {
+        const activeMonster = state.monsters[state.activeMonsterIndex];
+        const players = state.allPlayers.filter(player => state.fieldPlayers.includes(player.id));
+        let damage = 0;
 
-      switch (playerId) {
-        case 1: // Mario
-          damage = Math.floor(Math.random() * 50) + 10; // Daño entre 10 y 50
-          activeMonster.pv = Math.max(0, activeMonster.pv - damage);
-          break;
-        case 2: // Mallow (Cura)
-          players.forEach(player => {
-            const heal = Math.floor(Math.random() * 20) + 10; // Curar entre 10 y 20
-            player.stats.pv = Math.min(player.stats.pv + heal, player.stats.pvmax);
-          });
-          break;
-        case 3: // Geno
-          damage = Math.floor(Math.random() * 30) + 30; // Daño entre 30 y 60
-          activeMonster.pv = Math.max(0, activeMonster.pv - damage);
-          break;
-        case 4: // Peach (Cura)
-          players.forEach(player => {
-            const heal = Math.floor(Math.random() * 20) + 10; // Curar entre 10 y 20
-            player.stats.pv = Math.min(player.stats.pv + heal, player.stats.pvmax);
-          });
-          break;
-        case 5: // Bowser
-          damage = Math.floor(Math.random() * 100) + 1; // Daño entre 1 y 100
-          activeMonster.pv = Math.max(0, activeMonster.pv - damage);
-          break;
-        default:
-          damage = 0;
-      }
+        switch (playerId) {
+          case 1: // Mario
+            damage = Math.floor(Math.random() * 50) + 10; // Daño entre 10 y 50
+            activeMonster.pv = Math.max(0, activeMonster.pv - damage);
+            break;
+          case 2: // Mallow (Cura)
+            players.forEach(player => {
+              const heal = Math.floor(Math.random() * 20) + 20; 
+              player.stats.pv = Math.min(player.stats.pv + heal, player.stats.pvmax);
+            });
+            break;
+            case 3: // Geno
+            const manaIncrease = 10; // Incremento fijo de 10 puntos en el Mana
+            state.Mana = Math.min(state.Mana + manaIncrease, state.ManaMax); // Incrementar el Mana del grupo
+            break;
+          case 4: // Peach (Cura)
+            const playerToHeal = players.reduce((prev, current) => (prev.stats.pv < current.stats.pv ? prev : current));
+            const heal = Math.floor(Math.random() * 20) + 50; 
+            playerToHeal.stats.pv = Math.min(playerToHeal.stats.pv + heal, playerToHeal.stats.pvmax);
+            break;
+          case 5: // Bowser
+            damage = Math.floor(Math.random() * 100) + 1; // Daño entre 1 y 100
+            activeMonster.pv = Math.max(0, activeMonster.pv - damage);
+            break;
+          default:
+            damage = 0;
+        }
 
-      state.Mana = Math.max(0, state.Mana - 5); // Reducir el mana por el coste del ataque especial
+        state.Mana = Math.max(0, state.Mana - 5); // Reducir el mana por el coste del ataque especial
+        state.turns.push(playerId); // Registrar el ataque del jugador
 
-      if (activeMonster.pv <= 0 && state.activeMonsterIndex < state.monsters.length - 1) {
-        state.activeMonsterIndex += 1; // Cambiar al siguiente monstruo
+        if (activeMonster.pv <= 0 && state.activeMonsterIndex < state.monsters.length - 1) {
+          state.activeMonsterIndex += 1; // Cambiar al siguiente monstruo
+          state.turns = []; // Resetear los turnos para la nueva ronda
+        }
+
+        // Verificar si todos los jugadores han atacado
+        if (state.turns.length === state.fieldPlayers.length) {
+          state.turns = []; // Resetear los turnos para la nueva ronda
+        }
       }
     },
     hitBack: (state, action) => {
@@ -107,9 +126,12 @@ export const fightSlice = createSlice({
       // Reducir la salud del jugador seleccionado según el daño del contraataque
       randomPlayer.stats.pv = Math.max(0, randomPlayer.stats.pv - damage);
     },
+    resetTurns: (state) => {
+      state.turns = [];
+    },
   },
 });
 
-export const { swapPlayers, hitMonster, hitBack, hitMonsterSpecial } = fightSlice.actions;
+export const { swapPlayers, hitMonster, hitBack, hitMonsterSpecial, resetTurns } = fightSlice.actions;
 
 export default fightSlice.reducer;
