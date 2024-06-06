@@ -10,6 +10,7 @@ const PlayerCard = ({ player, isFieldPlayer, substitutePlayers }) => {
   const dispatch = useDispatch();
   const currentPlayer = useSelector(state => state.fight.allPlayers.find(p => p.id === player.id));
   const substituteMenuRef = useRef(null);
+  const turns = useSelector(state => state.fight.turns);
 
   const handleSwap = (substitutePlayerId) => {
     dispatch(swapPlayers({ fieldPlayerId: player.id, substitutePlayerId }));
@@ -32,9 +33,18 @@ const PlayerCard = ({ player, isFieldPlayer, substitutePlayers }) => {
 
   const isAlive = currentPlayer.stats.pv > 0;
 
+  function isDoigts(){
+    let display = true;
+    turns.forEach(idTurn => {
+      if(idTurn == player.id)
+        display = false;
+    });
+    return display && isFieldPlayer && isAlive ? <><img className="gant" src='./images/guante.png'/></> : null;
+  }
   return (
     <div className={`nes-container is-rounded is-dark ${isAlive ? '' : 'grayed-out'}`}>
       <div className="player-info">
+        {isDoigts()}
         <img className={`player-info ${isAlive ? '' : 'player-info-dead'}`} src={player.image} alt={player.name} width="150" height="150" />
         <div className="player-details">
           <h3>{player.name}</h3>
@@ -47,7 +57,7 @@ const PlayerCard = ({ player, isFieldPlayer, substitutePlayers }) => {
           </div>
         </div>
       </div>
-      {isFieldPlayer && (
+      {isFieldPlayer && player.id != 1 &&(
         <div className="substitute-container" ref={substituteMenuRef}>
           <button onClick={() => setShowSubstituteMenu(!showSubstituteMenu)}>
             <i className="snes-logo"></i>

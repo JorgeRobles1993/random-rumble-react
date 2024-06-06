@@ -6,14 +6,10 @@ const ButtonSpecial = (props) => {
   const dispatch = useDispatch();
   const mana = useSelector(state => state.fight.Mana);
   const currentPlayer = props.currentPlayerProps;
-  const activePlayers = useSelector(state => state.fight.allPlayers.filter(player => state.fight.fieldPlayers.includes(player.id) && player.stats.pv > 0));
+  const turns = useSelector(state => state.fight.turns);
 
   const attackSpecial = () => {
-    if (currentPlayer && currentPlayer.stats.pv > 0 && props.isFieldPlayerProps) {
-      if (!activePlayers.includes(currentPlayer)) {
-        console.log(`${currentPlayer.name} no está activo este turno.`);
-        return;
-      }
+    if (currentPlayer && currentPlayer.stats.pv > 0 && props.isFieldPlayerProps && !turns.find((idTurn) => idTurn == currentPlayer.id)) {
 
       if (mana >= 5) {
         dispatch(hitMonsterSpecial({ playerId: currentPlayer.id }));

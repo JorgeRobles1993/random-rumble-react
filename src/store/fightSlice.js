@@ -52,9 +52,20 @@ export const fightSlice = createSlice({
           state.activeMonsterIndex += 1; // Cambiar al siguiente monstruo
           state.turns = []; // Resetear los turnos para la nueva ronda
         }
+        let nbAlivePlayers = 0;
+        console.log(state.fieldPlayers);
+        state.fieldPlayers.forEach(idPlayer => {
+          state.allPlayers.forEach(player => {
+            if(idPlayer == player.id && player.stats.pv > 0){
+              nbAlivePlayers++;
+            }
+          });
+        })
+        console.log("alive cpt:", nbAlivePlayers, "joueurs joué:", state.turns);
 
         // Verificar si todos los jugadores han atacado
-        if (state.turns.length === state.fieldPlayers.length) {
+        if (state.turns.length >= nbAlivePlayers) {
+          console.log("raz du tableau", state.turns);
           state.turns = []; // Resetear los turnos para la nueva ronda
         }
       }
@@ -78,7 +89,7 @@ export const fightSlice = createSlice({
             });
             break;
             case 3: // Geno
-            const manaIncrease = 10; // Incremento fijo de 10 puntos en el Mana
+            const manaIncrease = 15; // Incremento fijo de 10 puntos en el Mana
             state.Mana = Math.min(state.Mana + manaIncrease, state.ManaMax); // Incrementar el Mana del grupo
             break;
           case 4: // Peach (Cura)
@@ -101,9 +112,17 @@ export const fightSlice = createSlice({
           state.activeMonsterIndex += 1; // Cambiar al siguiente monstruo
           state.turns = []; // Resetear los turnos para la nueva ronda
         }
-
+        let nbAlivePlayers = 0;
+        console.log(state.fieldPlayers);
+        state.fieldPlayers.forEach(idPlayer => {
+          state.allPlayers.forEach(player => {
+            if(idPlayer == player.id && player.stats.pv > 0){
+              nbAlivePlayers++;
+            }
+          });
+        })
         // Verificar si todos los jugadores han atacado
-        if (state.turns.length === state.fieldPlayers.length) {
+        if (state.turns.length >= nbAlivePlayers) {
           state.turns = []; // Resetear los turnos para la nueva ronda
         }
       }
@@ -125,6 +144,15 @@ export const fightSlice = createSlice({
 
       // Reducir la salud del jugador seleccionado según el daño del contraataque
       randomPlayer.stats.pv = Math.max(0, randomPlayer.stats.pv - damage);
+
+      //On enlève le joueur du turns si il est mort après le coup 
+      state.turns.forEach((idTurns, key) => {
+        state.allPlayers.forEach(player => {
+          if(player.id == idTurns && player.stats.pv <= 0){
+            delete state.turns[key];
+          }
+        })
+      })
     },
     resetTurns: (state) => {
       state.turns = [];

@@ -707,3 +707,12 @@ h3 {
   position: relative;
   bottom: -5vh;
 }
+
+.gant{
+  position:absolute;
+  left: 10%;
+  top: 18%;
+  width: 20%;
+  filter: invert(1);
+  transform: rotate(90deg);
+}
