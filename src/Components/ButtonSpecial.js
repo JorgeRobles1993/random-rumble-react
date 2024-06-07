@@ -18,7 +18,7 @@ const ButtonSpecial = (props) => {
         setTimeout(() => {
           dispatch(hitBack());
           console.log(`El monstruo contraatacó!`);
-        }, 1000); // Retraso de 1 segundo
+        }, 1000); 
       } else {
         console.log('Mana insuficiente para realizar el ataque especial.');
       }
@@ -33,6 +33,8 @@ const ButtonSpecial = (props) => {
       alt="Special Attack" 
       onClick={attackSpecial} 
       className="button-image" 
+      onMouseEnter={props.onMouseEnter}
+      onMouseLeave={props.onMouseLeave}
     />
   );
 };

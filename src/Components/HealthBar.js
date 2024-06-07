@@ -1,4 +1,3 @@
-// HealthBar.js
 import React from 'react';
 
 const HealthBar = (props) => {

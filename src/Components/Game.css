@@ -692,6 +692,7 @@ h3 {
 .grayed-out {
   filter: grayscale(100%);
   pointer-events: none; /* Deshabilita los eventos de ratón en la tarjeta */
+  z-index: 1;
 }
 
 .grayed-out .button-container button {
@@ -715,4 +716,29 @@ h3 {
   width: 20%;
   filter: invert(1);
   transform: rotate(90deg);
+}
+
+.tooltip {
+  position: absolute;
+  bottom: 110%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: #fff;
+  padding: 5px;
+  border-radius: 4px;
+  z-index: 1;
+  white-space: nowrap;
+  font-size: 12px;
+}
+
+.tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #333 transparent transparent transparent;
 }

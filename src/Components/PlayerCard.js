@@ -7,6 +7,8 @@ import ButtonSpecial from './ButtonSpecial';
 
 const PlayerCard = ({ player, isFieldPlayer, substitutePlayers }) => {
   const [showSubstituteMenu, setShowSubstituteMenu] = useState(false);
+  const [tooltipContent, setTooltipContent] = useState('');
+  const [showTooltip, setShowTooltip] = useState(false);
   const dispatch = useDispatch();
   const currentPlayer = useSelector(state => state.fight.allPlayers.find(p => p.id === player.id));
   const substituteMenuRef = useRef(null);
@@ -14,7 +16,7 @@ const PlayerCard = ({ player, isFieldPlayer, substitutePlayers }) => {
 
   const handleSwap = (substitutePlayerId) => {
     dispatch(swapPlayers({ fieldPlayerId: player.id, substitutePlayerId }));
-    setShowSubstituteMenu(false); // Oculta el menú después de realizar el intercambio
+    setShowSubstituteMenu(false); 
   };
 
   useEffect(() => {
@@ -33,6 +35,15 @@ const PlayerCard = ({ player, isFieldPlayer, substitutePlayers }) => {
 
   const isAlive = currentPlayer.stats.pv > 0;
 
+  const handleMouseEnter = (content) => {
+    setTooltipContent(content);
+    setShowTooltip(true);
+  };
+
+  const handleMouseLeave = () => {
+    setShowTooltip(false);
+  };
+
   function isDoigts(){
     let display = true;
     turns.forEach(idTurn => {
@@ -41,6 +52,7 @@ const PlayerCard = ({ player, isFieldPlayer, substitutePlayers }) => {
     });
     return display && isFieldPlayer && isAlive ? <><img className="gant" src='./images/guante.png'/></> : null;
   }
+
   return (
     <div className={`nes-container is-rounded is-dark ${isAlive ? '' : 'grayed-out'}`}>
       <div className="player-info">
@@ -53,11 +65,21 @@ const PlayerCard = ({ player, isFieldPlayer, substitutePlayers }) => {
           </div>
           <div className="button-container">
             <ButtonAttack currentPlayerProps={currentPlayer} isFieldPlayerProps={isFieldPlayer} />
-            <ButtonSpecial currentPlayerProps={currentPlayer} isFieldPlayerProps={isFieldPlayer} />
+            <ButtonSpecial 
+              currentPlayerProps={currentPlayer} 
+              isFieldPlayerProps={isFieldPlayer}
+              onMouseEnter={() => handleMouseEnter(currentPlayer.specialAttack)}
+              onMouseLeave={handleMouseLeave}
+            />
           </div>
         </div>
       </div>
-      {isFieldPlayer && player.id != 1 &&(
+      {showTooltip && (
+        <div className="tooltip">
+          {tooltipContent}
+        </div>
+      )}
+      {isFieldPlayer && player.id != 1 && (
         <div className="substitute-container" ref={substituteMenuRef}>
           <button onClick={() => setShowSubstituteMenu(!showSubstituteMenu)}>
             <i className="snes-logo"></i>

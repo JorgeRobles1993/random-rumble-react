@@ -1,6 +1,5 @@
-// store.js
 import { configureStore } from '@reduxjs/toolkit';
-import fightReducer from './fightSlice';  // Asegúrate de que la ruta sea correcta
+import fightReducer from './fightSlice'; 
 
 const store = configureStore({
   reducer: {

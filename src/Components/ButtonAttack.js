@@ -16,7 +16,7 @@ const ButtonAttack = (props) => {
       setTimeout(() => {
         dispatch(hitBack());
         console.log(`El monstruo contraatacó!`);
-      }, 1000); // Retraso de 1 segundo
+      }, 1000); 
     } else if (currentPlayer) {
       console.log(`${currentPlayer.name} no puede atacar porque no tiene vida restante, no está dentro del equipo activo o no es su turno de atacar.`);
     }
