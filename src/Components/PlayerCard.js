@@ -16,7 +16,7 @@ const PlayerCard = ({ player, isFieldPlayer, substitutePlayers }) => {
 
   const handleSwap = (substitutePlayerId) => {
     dispatch(swapPlayers({ fieldPlayerId: player.id, substitutePlayerId }));
-    setShowSubstituteMenu(false); 
+    setShowSubstituteMenu(false);
   };
 
   useEffect(() => {
@@ -44,13 +44,13 @@ const PlayerCard = ({ player, isFieldPlayer, substitutePlayers }) => {
     setShowTooltip(false);
   };
 
-  function isDoigts(){
+  function isDoigts() {
     let display = true;
     turns.forEach(idTurn => {
-      if(idTurn == player.id)
+      if (idTurn == player.id)
         display = false;
     });
-    return display && isFieldPlayer && isAlive ? <><img className="gant" src='./images/guante.png'/></> : null;
+    return display && isFieldPlayer && isAlive ? <><img className="gant" src='./images/guante.png' /></> : null;
   }
 
   return (
@@ -65,8 +65,8 @@ const PlayerCard = ({ player, isFieldPlayer, substitutePlayers }) => {
           </div>
           <div className="button-container">
             <ButtonAttack currentPlayerProps={currentPlayer} isFieldPlayerProps={isFieldPlayer} />
-            <ButtonSpecial 
-              currentPlayerProps={currentPlayer} 
+            <ButtonSpecial
+              currentPlayerProps={currentPlayer}
               isFieldPlayerProps={isFieldPlayer}
               onMouseEnter={() => handleMouseEnter(currentPlayer.specialAttack)}
               onMouseLeave={handleMouseLeave}

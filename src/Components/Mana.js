@@ -9,7 +9,7 @@ function Mana() {
     <div className='Manaimage nes-container is-rounded is-dark'>
       <img src='/images/Flower.png' width="100px" height="100px" alt="Mana Flower" />
       <div>
-        <p>Mana: {mana}/{manaMax}</p>
+        <p>Flowers: {mana}/{manaMax}</p>
       </div>
     </div>
   );
